@@ -2,10 +2,9 @@ from typing import Callable, List, Tuple
 
 import pytest
 from hypothesis import given
-from hypothesis.strategies import lists
+from hypothesis.strategies import lists, floats
 
 from minitorch import MathTest
-from minitorch.operators import sigmoid  # noqa: F401
 from minitorch.operators import (
     add,
     addLists,
@@ -22,6 +21,7 @@ from minitorch.operators import (
     prod,
     relu,
     relu_back,
+    sigmoid,
     sum,
 )
 
@@ -99,7 +99,7 @@ def test_eq(a: float) -> None:
 
 
 @pytest.mark.task0_2
-@given(small_floats)
+@given(floats(min_value=-20, max_value=20, allow_nan=False))
 def test_sigmoid(a: float) -> None:
     """Check properties of the sigmoid function, specifically
     * It is always between 0.0 and 1.0.
@@ -107,8 +107,11 @@ def test_sigmoid(a: float) -> None:
     * It crosses 0 at 0.5
     * It is  strictly increasing.
     """
-    # TODO: Implement for Task 0.2.
-    raise NotImplementedError("Need to implement for Task 0.2")
+    assert sigmoid(a) >= 0.0
+    assert sigmoid(a) <= 1.0
+    assert_close(1 - sigmoid(a), sigmoid(-a))
+    assert sigmoid(0) == 0.5
+    assert sigmoid(a + 0.001) - sigmoid(a) > 0.0
 
 
 @pytest.mark.task0_2

@@ -142,8 +142,11 @@ def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[fl
          A function that takes a list, applies `fn` to each element, and returns a
          new list
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+
+    def new_fn(ls: Iterable[float]) -> Iterable[float]:
+        return [fn(x) for x in ls]
+
+    return new_fn
 
 
 def negList(ls: Iterable[float]) -> Iterable[float]:

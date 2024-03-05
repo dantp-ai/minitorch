@@ -1,4 +1,4 @@
-from typing import Callable, List, Tuple
+from typing import Callable, List, Tuple, Iterable
 
 import pytest
 from hypothesis import given
@@ -15,6 +15,7 @@ from minitorch.operators import (
     log_back,
     lt,
     max,
+    map,
     mul,
     neg,
     negList,
@@ -160,6 +161,22 @@ def test_other(a: float, b: float, c: float) -> None:
 
 # These tests check that your higher-order functions obey basic
 # properties.
+
+
+@pytest.mark.task0_3
+@given(lists(small_floats, min_size=0, max_size=100), small_floats)
+def test_map(ls: Iterable[float], a: float) -> None:
+    def fn(x: float) -> float:
+        return x + a
+
+    def fn2(x: float) -> float:
+        return x * a
+
+    expected1 = [fn(x) for x in ls]
+    expected2 = [fn2(x) for x in ls]
+
+    assert expected1 == map(fn)(ls)
+    assert expected2 == map(fn2)(ls)
 
 
 @pytest.mark.task0_3

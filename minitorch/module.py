@@ -31,13 +31,24 @@ class Module:
 
     def train(self) -> None:
         "Set the mode of this module and all descendent modules to `train`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError("Need to implement for Task 0.4")
+        self._set_mode(self, train=True)
+
+    def _set_mode(self, root: Module, train: bool = False) -> None:
+        if not root:
+            return
+
+        if train:
+            root.training = True
+        else:
+            root.training = False
+        modules = getattr(root, "_modules", None)
+        if modules is not None:
+            for _, v in modules.items():
+                self._set_mode(v, train)
 
     def eval(self) -> None:
         "Set the mode of this module and all descendent modules to `eval`."
-        # TODO: Implement for Task 0.4.
-        raise NotImplementedError("Need to implement for Task 0.4")
+        self._set_mode(self, train=False)
 
     def named_parameters(self) -> Sequence[Tuple[str, Parameter]]:
         """

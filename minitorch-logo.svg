@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 575 150" width="575" height="150" fill="none" role="img" aria-label="minitorch">
+  <defs>
+    
+  </defs>
+
+  
+  <g transform="translate(30 22) scale(0.84)">
+    <path d="M50 6 C 70 38 88 54 88 78 A 38 38 0 1 1 12 78 C 12 54 30 38 50 6 Z" fill="#E5401A"></path>
+    <path d="M50 50 C 60 66 67 74 67 86 A 17 17 0 1 1 33 86 C 33 74 40 66 50 50 Z" fill="#ffffff"></path>
+  </g>
+
+  
+  <text x="146" y="108" font-family="&#39;Baloo 2 mt&#39;,&#39;Baloo 2&#39;,sans-serif" font-weight="800" font-size="92" letter-spacing="-1">
+    <tspan fill="#1F1B18">mini</tspan><tspan fill="#E5401A">torch</tspan>
+  </text>
+</svg>

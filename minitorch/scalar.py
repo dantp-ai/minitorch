@@ -110,7 +110,7 @@ class Scalar:
         return Add.apply(self, -b)
 
     def __neg__(self) -> Scalar:
-        return Neg.apply(self.data)
+        return Neg.apply(self)
 
     def __radd__(self, b: ScalarLike) -> Scalar:
         return self + b
@@ -119,16 +119,16 @@ class Scalar:
         return self * b
 
     def log(self) -> Scalar:
-        return Log.apply(self.data)
+        return Log.apply(self)
 
     def exp(self) -> Scalar:
-        return Exp.apply(self.data)
+        return Exp.apply(self)
 
     def sigmoid(self) -> Scalar:
-        return Sigmoid.apply(self.data)
+        return Sigmoid.apply(self)
 
     def relu(self) -> Scalar:
-        return ReLU.apply(self.data)
+        return ReLU.apply(self)
 
     # Variable elements for backprop
 
@@ -163,8 +163,12 @@ class Scalar:
         assert h.last_fn is not None
         assert h.ctx is not None
 
-        # TODO: Implement for Task 1.3.
-        raise NotImplementedError("Need to implement for Task 1.3")
+        derivatives = h.last_fn._backward(h.ctx, d_output)
+        return [
+            (inp, d)
+            for inp, d in zip(h.inputs, derivatives)
+            if not inp.is_constant()
+        ]
 
     def backward(self, d_output: Optional[float] = None) -> None:
         """

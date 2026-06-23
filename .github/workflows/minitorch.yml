@@ -56,8 +56,12 @@ jobs:
         echo "Module 3"
         pytest tests -x -m task3_1
         pytest tests -x -m task3_2
-        pytest tests -x -m task3_3
-        pytest tests -x -m task3_4
+        # task3_3 / task3_4 are CUDA tests; they are only collected when a GPU
+        # is present. On CPU-only runners pytest collects nothing and exits 5
+        # ("no tests collected"), which is fine here — tolerate exit code 5
+        # while still failing on any real test failure.
+        pytest tests -x -m task3_3 || [ $? -eq 5 ]
+        pytest tests -x -m task3_4 || [ $? -eq 5 ]
 
     - name: Test Module 4
       run: |

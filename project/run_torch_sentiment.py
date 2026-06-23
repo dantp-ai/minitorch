@@ -133,12 +133,12 @@ def train(
         print(
             "Train loss: {:.6f}...".format(train_loss / n_batches),
             f"Train correct: {train_correct}/{len(X_train)}",
-            f"Train accuracy: {train_correct/len(X_train):.2%}",
+            f"Train accuracy: {train_correct / len(X_train):.2%}",
         )
         print(
             "Val loss: {:.6f}".format(val_loss.item()),
             f"Val correct: {val_correct}/{len(X_val)}",
-            f"Val accuracy: {val_correct/len(X_val):.2%}",
+            f"Val accuracy: {val_correct / len(X_val):.2%}",
         )
         print()
 

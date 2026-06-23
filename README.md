@@ -75,6 +75,29 @@ pytest tests/ -m task2_3      # one task group (markers task0_1 … task4_4)
 > CUDA kernels compile lazily; the GPU test groups (`task3_3`, `task3_4`) are
 > skipped automatically when no CUDA device is present.
 
+### Testing the CUDA kernels on Colab
+
+The CUDA backend needs an NVIDIA GPU, so `task3_3`/`task3_4` are skipped locally
+and in CI. To exercise them, open a **Colab GPU runtime** (Runtime → Change
+runtime type → **T4 GPU**) and run:
+
+```python
+# install numba's CUDA backend, then confirm the GPU is visible
+!pip install -q numba-cuda
+from numba import cuda          # note: `from numba import cuda`, not `numba.cuda`
+print(cuda.is_available())      # -> True on a GPU runtime
+
+# get the code + test deps
+!git clone https://github.com/dantp-ai/minitorch.git
+!pip install -q numpy hypothesis pytest pytest-env
+
+# run ONLY the CUDA task groups
+!cd minitorch && python -m pytest tests -m "task3_3 or task3_4" -v
+```
+
+On a T4 this runs the full CUDA suite — map/zip/reduce, the `sum`/`matmul`
+practice kernels, and the shared-memory tiled matrix multiply (58 tests, ~3 min).
+
 ---
 
 ## Train something

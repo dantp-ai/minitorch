@@ -42,11 +42,11 @@ The codebase is layered, each module builds strictly on the one below it.
 
 | Layer | Module | What it provides |
 |------|--------|------------------|
-| **Math core** | `operators.py` | Elementary scalar functions + functional `map`/`zip`/`reduce` |
-| **Scalar autodiff** | `scalar.py`, `autodiff.py` | Single-value variables, the backprop engine, chain rule |
-| **Tensors** | `tensor_data.py`, `tensor.py`, `tensor_ops.py` | Strided n-d arrays, broadcasting, differentiable tensor ops |
-| **Speed** | `fast_ops.py`, `fast_conv.py`, `cuda_ops.py` | Numba-parallel CPU and CUDA backends + fast matmul |
-| **Networks** | `nn.py`, `module.py`, `optim.py` | Conv, pooling, softmax, dropout, `Module`, SGD |
+| **Math core** | [`operators.py`](minitorch/operators.py) | Elementary scalar functions + functional `map`/`zip`/`reduce` |
+| **Scalar autodiff** | [`scalar.py`](minitorch/scalar.py), [`autodiff.py`](minitorch/autodiff.py) | Single-value variables, the backprop engine, chain rule |
+| **Tensors** | [`tensor_data.py`](minitorch/tensor_data.py), [`tensor.py`](minitorch/tensor.py), [`tensor_ops.py`](minitorch/tensor_ops.py) | Strided n-d arrays, broadcasting, differentiable tensor ops |
+| **Speed** | [`fast_ops.py`](minitorch/fast_ops.py), [`fast_conv.py`](minitorch/fast_conv.py), [`cuda_ops.py`](minitorch/cuda_ops.py) | Numba-parallel CPU and CUDA backends + fast matmul |
+| **Networks** | [`nn.py`](minitorch/nn.py), [`module.py`](minitorch/module.py), [`optim.py`](minitorch/optim.py) | Conv, pooling, softmax, dropout, `Module`, SGD |
 
 ```
 input → Tensor (records op on the graph) → forward → loss
@@ -79,15 +79,15 @@ pytest tests/ -m task2_3      # one task group (markers task0_1 … task4_4)
 
 ## Train something
 
-The `project/` directory contains runnable demos that train models built on the
+The [`project/`](project/) directory contains runnable demos that train models built on the
 engine:
 
 | Script | Task |
 |--------|------|
-| `project/run_tensor.py` | Binary classification on toy datasets (xor, circle, spiral) |
-| `project/run_fast_tensor.py` | Same, on the Numba-parallel backend |
-| `project/run_mnist_multiclass.py` | MNIST digit classification with a small ConvNet |
-| `project/run_sentiment.py` | Sentence sentiment with embeddings + 1D conv |
+| [`project/run_tensor.py`](project/run_tensor.py) | Binary classification on toy datasets (xor, circle, spiral) |
+| [`project/run_fast_tensor.py`](project/run_fast_tensor.py) | Same, on the Numba-parallel backend |
+| [`project/run_mnist_multiclass.py`](project/run_mnist_multiclass.py) | MNIST digit classification with a small ConvNet |
+| [`project/run_sentiment.py`](project/run_sentiment.py) | Sentence sentiment with embeddings + 1D conv |
 
 ```bash
 python project/run_tensor.py

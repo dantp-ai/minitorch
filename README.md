@@ -118,12 +118,6 @@ python project/run_tensor.py
 
 ---
 
-## Tech stack
-
-`Python 3.12` · `NumPy` · `Numba` (JIT + CUDA) · `Hypothesis` · `pytest`
-
----
-
 ## Credits
 
 Built on the excellent [**MiniTorch**](https://minitorch.github.io/) teaching

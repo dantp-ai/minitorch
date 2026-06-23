@@ -31,8 +31,27 @@ def test_avg(t: Tensor) -> None:
 @pytest.mark.task4_4
 @given(tensors(shape=(2, 3, 4)))
 def test_max(t: Tensor) -> None:
-    # TODO: Implement for Task 4.4.
-    raise NotImplementedError("Need to implement for Task 4.4")
+    # Max along each dimension matches the manual maximum.
+    out = minitorch.nn.max(t, 2)
+    for i in range(2):
+        for j in range(3):
+            assert_close(out[i, j, 0], max(t[i, j, k] for k in range(4)))
+
+    out = minitorch.nn.max(t, 1)
+    for i in range(2):
+        for k in range(4):
+            assert_close(out[i, 0, k], max(t[i, j, k] for j in range(3)))
+
+    out = minitorch.nn.max(t, 0)
+    for j in range(3):
+        for k in range(4):
+            assert_close(out[0, j, k], max(t[i, j, k] for i in range(2)))
+
+    # Backward: use distinct values so the argmax (and hence the gradient) is
+    # unambiguous and the central-difference check is exact (ties would make
+    # the 1-hot argmax gradient disagree with central difference).
+    distinct = minitorch.tensor([float(v) for v in range(2 * 3 * 4)]).view(2, 3, 4)
+    minitorch.grad_check(lambda a: minitorch.nn.max(a, 2), distinct)
 
 
 @pytest.mark.task4_4

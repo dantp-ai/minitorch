@@ -79,8 +79,26 @@ def _tensor_conv1d(
     s1 = input_strides  # noqa: F841
     s2 = weight_strides  # noqa: F841
 
-    # TODO: Implement for Task 4.1.
-    raise NotImplementedError("Need to implement for Task 4.1")
+    for i in prange(out_size):
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        to_index(i, out_shape, out_index)
+        b = out_index[0]
+        oc = out_index[1]
+        j = out_index[2]
+        acc = 0.0
+        for dj in range(kw):
+            if reverse:
+                ij = j - dj
+            else:
+                ij = j + dj
+            if ij < 0 or ij >= width:
+                continue
+            for ic in range(in_channels):
+                acc += (
+                    input[b * s1[0] + ic * s1[1] + ij * s1[2]]
+                    * weight[oc * s2[0] + ic * s2[1] + dj * s2[2]]
+                )
+        out[index_to_position(out_index, out_strides)] = acc
 
 
 tensor_conv1d = njit(parallel=True)(_tensor_conv1d)
@@ -205,8 +223,30 @@ def _tensor_conv2d(
     s10, s11, s12, s13 = s1[0], s1[1], s1[2], s1[3]  # noqa: F841
     s20, s21, s22, s23 = s2[0], s2[1], s2[2], s2[3]  # noqa: F841
 
-    # TODO: Implement for Task 4.2.
-    raise NotImplementedError("Need to implement for Task 4.2")
+    for idx in prange(out_size):
+        out_index = np.zeros(MAX_DIMS, np.int32)
+        to_index(idx, out_shape, out_index)
+        b = out_index[0]
+        oc = out_index[1]
+        oh = out_index[2]
+        ow = out_index[3]
+        acc = 0.0
+        for ic in range(in_channels):
+            for dh in range(kh):
+                for dw in range(kw):
+                    if reverse:
+                        ih = oh - dh
+                        iw = ow - dw
+                    else:
+                        ih = oh + dh
+                        iw = ow + dw
+                    if ih < 0 or ih >= height or iw < 0 or iw >= width:
+                        continue
+                    acc += (
+                        input[b * s10 + ic * s11 + ih * s12 + iw * s13]
+                        * weight[oc * s20 + ic * s21 + dh * s22 + dw * s23]
+                    )
+        out[index_to_position(out_index, out_strides)] = acc
 
 
 tensor_conv2d = njit(parallel=True, fastmath=True)(_tensor_conv2d)

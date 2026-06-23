@@ -244,7 +244,7 @@ def render_tensor_sandbox(hide_function_defs: bool):
         storage_size = len(tensor_data)
         if tensor_size != storage_size:
             st.error(
-                f"Tensor data storage must define all values in shape ({tensor_size} != {storage_size    })"
+                f"Tensor data storage must define all values in shape ({tensor_size} != {storage_size})"
             )
         else:
             st.error(e)

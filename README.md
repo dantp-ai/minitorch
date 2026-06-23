@@ -4,8 +4,8 @@
 
 > A deep learning framework built from scratch — reverse-mode autodiff, n-dimensional tensors, and a neural-network stack, with NumPy, Numba-parallel CPU, and CUDA backends.
 
-![Python](https://img.shields.io/badge/python-3.8-blue)
-![NumPy](https://img.shields.io/badge/NumPy-1.22-013243?logo=numpy)
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![NumPy](https://img.shields.io/badge/NumPy-2.x-013243?logo=numpy)
 ![Numba](https://img.shields.io/badge/Numba-JIT%20%2B%20CUDA-00A3E0)
 ![Tests](https://img.shields.io/badge/tests-200%2B%20passing-success)
 
@@ -58,10 +58,10 @@ loss.backward() ← topological sort ← chain rule ← stored contexts
 
 ## Quickstart
 
-Requires **Python 3.8**. Recommended using [`uv`](https://github.com/astral-sh/uv):
+Requires **Python 3.12**. Recommended using [`uv`](https://github.com/astral-sh/uv):
 
 ```bash
-uv venv --python 3.8 && source .venv/bin/activate
+uv venv --python 3.12 && source .venv/bin/activate
 uv pip install -r requirements.txt
 ```
 
@@ -97,7 +97,7 @@ python project/run_tensor.py
 
 ## Tech stack
 
-`Python 3.8` · `NumPy` · `Numba` (JIT + CUDA) · `Hypothesis` · `pytest`
+`Python 3.12` · `NumPy` · `Numba` (JIT + CUDA) · `Hypothesis` · `pytest`
 
 ---
 
